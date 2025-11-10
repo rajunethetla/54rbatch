@@ -21,6 +21,10 @@ from basic.views import sample1
 from basic.views import sampleinfo
 from basic.views import dynamicresponse
 from basic.views import add
+from basic.views import health
+from basic.views import addStudent
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +32,9 @@ urlpatterns = [
     path('54r/',sample1),
     path('info/',sampleinfo),
     path('response/',dynamicresponse),
-    path('addition/',add)
+    path('addition/',add),
+    path('health/',health),
+    path('add/',addStudent)
+    
 
 ]
