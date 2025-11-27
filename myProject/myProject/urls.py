@@ -25,7 +25,7 @@ from basic.views import health
 from basic.views import addStudent
 from basic.views import job1
 from basic.views import job2
-from basic.views import signUp
+from basic.views import signUp,check,login
 
 
 
@@ -40,7 +40,9 @@ urlpatterns = [
     path('add/',addStudent),
     path('job1/',job1),
     path('job2/',job2),
-    path('signup/',signUp)
+    path('signup/',signUp),
+    path('check/',check),
+    path('login/',login)
     
 
 ]
