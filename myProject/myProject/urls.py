@@ -25,7 +25,7 @@ from basic.views import health
 from basic.views import addStudent
 from basic.views import job1
 from basic.views import job2
-from basic.views import signUp,check,login
+from basic.views import signUp,check,login,getAllUsers,home,aboutus,welcome,contact,services,projects
 
 
 
@@ -42,7 +42,14 @@ urlpatterns = [
     path('job2/',job2),
     path('signup/',signUp),
     path('check/',check),
-    path('login/',login)
+    path('login/',login),
+    path('users/',getAllUsers),
+    path('home/',home,name='home'),
+    path('about/',aboutus,name='about'),
+    path('welcome/',welcome,name='welcome'),
+    path('contact/',contact,name='contact'),
+    path('services/',services,name='services'),
+    path('projects/',projects,name='projects')
     
 
 ]

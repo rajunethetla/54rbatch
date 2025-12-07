@@ -7,6 +7,10 @@ from django.views.decorators.csrf import csrf_exempt
 from basic.models import Student
 from  basic.models import Users
 from django.contrib.auth.hashers import make_password,check_password
+import jwt
+from  django.conf import settings
+from datetime  import datetime,timedelta
+from  zoneinfo  import  ZoneInfo
 
 # Create your views here.
 def sample(request):
@@ -118,8 +122,13 @@ def  login(request):
         password=data.get("password")
         try:
             user=Users.objects.get(username=username)
+            issued_time=datetime.now(ZoneInfo("Asia/Kolkata"))
+            expired_time=issued_time+timedelta(minutes=25)
             if  check_password(password,user.password):
-                return JsonResponse({"status":"successfully loggedin"},status=200)
+                #token="a json web token"
+                payload={"username":username,"email":user.email,"id":user.id,"exp":expired_time}
+                token=jwt.encode(payload,settings.SECRET_KEY,algorithm="HS256")
+                return JsonResponse({"status":"successfully loggedin",'token':token,'token':token,"issued_at":issued_time,"expired at":expired_time,"expired_in":int((expired_time-issued_time).total_seconds()/60)},status=200)
             else:
                 return  JsonResponse({"status":"failure","message":"invalid password"},status=400)
         except Users.DoesNotExist:
@@ -138,5 +147,39 @@ def  check(request):
     print(x)
    
     return JsonResponse({"status":"success","data":x},status=200)
+
+#bulid an api to get all users  from users table
+@csrf_exempt
+def  getAllUsers(request):
+    if  request.method=="GET":
+        users=list(Users.objects.values())
+        print(request.token_data,"token_data in view")
+        print(request.token_data.get("username"),"username from token")
+        print(users,"users list")
+        for user in users:
+            print(user["username"],"username  from users list")
+            if user["username"]==request.token_data.get("username"):
+                return JsonResponse({"status":"success","loggedin_user":request.token_data,"data":users},status=200)
+        return JsonResponse({"status":"unauthorized access"},status=200)
+    
+
+
+def home(request):
+    return  render(request,'home.html')
+def aboutus(request):
+    return render(request,'aboutus.html')
+
+def welcome(request):
+    return render(request,'welcome.html')
+
+def  contact(request):
+    return  render(request,'contact.html')
+
+def services(request):
+    return  render(request,'services.html')
+
+def projects(request):
+    return render(request,'projects.html')
+    
 
 
