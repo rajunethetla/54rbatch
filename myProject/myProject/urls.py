@@ -26,10 +26,15 @@ from basic.views import addStudent
 from basic.views import job1
 from basic.views import job2
 from basic.views import signUp,check,login,getAllUsers,home,aboutus,welcome,contact,services,projects
-
+from basic2.views import bs2,productById,productBycategory
+from cbv.views  import DemoClass,PaymentInfo
 
 
 urlpatterns = [
+    path('pay/',PaymentInfo.as_view()),
+    path('cbv/',DemoClass.as_view()),
+    path('product/<int:id>',productById),
+    path('product/category/<str:ctg>',productBycategory),
     path('admin/', admin.site.urls),
     path('greet/',sample),
     path('54r/',sample1),
@@ -49,7 +54,8 @@ urlpatterns = [
     path('welcome/',welcome,name='welcome'),
     path('contact/',contact,name='contact'),
     path('services/',services,name='services'),
-    path('projects/',projects,name='projects')
+    path('projects/',projects,name='projects'),
+    path('bs2/',bs2)
     
 
 ]
